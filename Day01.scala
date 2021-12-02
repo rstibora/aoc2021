@@ -1,6 +1,6 @@
 import scala.io.Source
 
-def coundDepthIncreases(depthMeasurements: Array[Int]): Int = 
+def countDepthIncreases(depthMeasurements: Array[Int]): Int = 
     var depthIncreasesCount = 0
     var previousDepth = depthMeasurements(0)
     for
@@ -17,9 +17,9 @@ def filter(rawDepthMeasurements: Array[Int], windowSize: Int): Array[Int] =
 
 def firstStar() = 
     val depthMeasurements = Source.fromFile("./inputs/day01").getLines().map(line => line.toInt).toArray
-    println(coundDepthIncreases(depthMeasurements))
+    println(countDepthIncreases(depthMeasurements))
 
 @main def secondStar() =
     val depthMeasurements = Source.fromFile("./inputs/day01").getLines().map(line => line.toInt).toArray
     val filteredMeasurements = filter(depthMeasurements, windowSize = 3)
-    println(coundDepthIncreases(filteredMeasurements))
+    println(countDepthIncreases(filteredMeasurements))

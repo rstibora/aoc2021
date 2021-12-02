@@ -15,7 +15,7 @@ def parseInstruction(instruction: String): Instruction =
         case "up" => return Up(amount)
         case "down" => return Down(amount)
 
-@main def firstStar() =
+def firstStar() =
     import Instruction.*
 
     var xPosition = 0
@@ -29,4 +29,22 @@ def parseInstruction(instruction: String): Instruction =
             case Down(amount) => depth += amount
         }
 
+    println(xPosition * depth)
+
+@main def secondStar() =
+    import Instruction.*
+
+    var xPosition = 0
+    var depth = 0
+    var aim = 0
+    for
+        instruction <- Source.fromFile("./inputs/day02").getLines.map(parseInstruction)
+    do
+        instruction match {
+            case Forward(amount) => 
+                xPosition += amount
+                depth += amount * aim
+            case Up(amount) => aim -= amount
+            case Down(amount) => aim += amount
+        }
     println(xPosition * depth)
