@@ -32,8 +32,7 @@ extension (board: Board)
                                             case Field.Unmarked(number, _, _) => number
                                             case _ => 0).sum
 
-@main def firstStar() =
-    val inputLines = Source.fromFile("./inputs/day04").getLines
+def prepareGame(inputLines: Iterator[String]): (Seq[Board], Seq[Int]) =
     val numbersToDraw = inputLines.next.split(",").map(_.toInt)
     var boards: Seq[Board] = List()
 
@@ -46,6 +45,10 @@ extension (board: Board)
                 fields = fields :+ Field.Unmarked(rowNumbers(x), x, y)
         boards = boards :+ Board(fields)
         if inputLines.hasNext then inputLines.next
+    (boards, numbersToDraw)
+
+def firstStar() =
+    var (boards, numbersToDraw) = prepareGame(Source.fromFile("./inputs/day04").getLines)
 
     def playUntilWin(boards: Seq[Board], numbersToDraw: Seq[Int]): Int =
         val drawnNumber = numbersToDraw.head
@@ -56,3 +59,17 @@ extension (board: Board)
         playUntilWin(playedBoards, numbersToDraw.tail)
 
     println(playUntilWin(boards, numbersToDraw.toSeq))
+
+
+@main def secondStar() =
+    var (boards, numbersToDraw) = prepareGame(Source.fromFile("./inputs/day04").getLines)
+
+    def playUntilLastBoard(boards: Seq[Board], numbersToDraw: Seq[Int]): Int =
+        val drawnNumber = numbersToDraw.head
+        val playedBoards = boards.map(_.draw(drawnNumber))
+        val remainingBoards = playedBoards.filter(!_.checkWinningCondition())
+        if remainingBoards.length == 0 then
+            return playedBoards.head.calculateWinningScore() * drawnNumber
+        playUntilLastBoard(remainingBoards, numbersToDraw.tail)
+
+    println(playUntilLastBoard(boards, numbersToDraw.toSeq))
