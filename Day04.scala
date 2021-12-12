@@ -1,5 +1,5 @@
 import scala.io.Source
-import scala.compiletime.ops.boolean
+
 
 enum Field:
     case Unmarked(number: Int, x: Int, y: Int)
