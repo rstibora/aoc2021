@@ -1,3 +1,5 @@
+package aoc2021.day3
+
 import scala.io.Source
 import scala.math.pow
 
@@ -22,14 +24,14 @@ def filterAccordingNthBit(diagnosticLines: Vector[Vector[Int]], bitPosition: Int
     val processedLines = criterium(diagnosticLines).map(_.getOrElse(preferredBitValue))
     diagnosticLines.filter(diagnosticLine => diagnosticLine(bitPosition) == processedLines(bitPosition))
 
-def firstStar() =
-    val diagnosticReport = Source.fromFile("./inputs/day03").getLines.map(parseDiagnosticLine).toVector
+def firstStar(inputLines: Seq[String]): Long =
+    val diagnosticReport = inputLines.map(parseDiagnosticLine).toVector
     val mostCommonBits = findMostCommonBits(diagnosticReport).map(_.getOrElse(1))
     val leastCommonBits = findLeastCommonBits(diagnosticReport).map(_.getOrElse(1))
-    println(toDecimal(mostCommonBits) * toDecimal(leastCommonBits))
+    toDecimal(mostCommonBits) * toDecimal(leastCommonBits)
 
-@main def secondStar() =
-    val diagnosticReport = Source.fromFile("./inputs/day03").getLines.map(parseDiagnosticLine).toVector
+def secondStar(inputLines: Seq[String]): Long =
+    val diagnosticReport = inputLines.map(parseDiagnosticLine).toVector
     var filteredReport = diagnosticReport
     for bitPosition <- 0 until filteredReport(0).length do
         filteredReport = filterAccordingNthBit(filteredReport, bitPosition, findMostCommonBits, preferredBitValue = 1)
@@ -39,4 +41,4 @@ def firstStar() =
     for bitPosition <- 0 until filteredReport(0).length do
         filteredReport = filterAccordingNthBit(filteredReport, bitPosition, findLeastCommonBits, preferredBitValue = 0)
     val co2ScrubberRating =  toDecimal(filteredReport(0))
-    println(oxygenGeneratorRating * co2ScrubberRating)
+    oxygenGeneratorRating * co2ScrubberRating

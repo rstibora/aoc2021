@@ -1,3 +1,5 @@
+package aoc2021.day8
+
 import scala.io.Source
 import scala.collection.Set
 
@@ -9,15 +11,15 @@ object Entry:
         val splitEntry = entry.split("\\|")
         Entry(splitEntry(0).split(" ").filter(_ != ""), splitEntry(1).split(" ").filter(_ != ""))
 
-def firstStar() =
-    val entries = Source.fromFile("./inputs/day08").getLines.map(Entry.from)
+def firstStar(inputLines: Seq[String]): Long =
+    val entries = inputLines.map(Entry.from)
     def patternFilter(pattern: String): Boolean =
         pattern.length match
             case 2 | 3 | 4 | 7 => true
             case _ => false
-    println(entries.map(entry => entry.outputs.filter(patternFilter).length).sum)
+    entries.map(entry => entry.outputs.filter(patternFilter).length).sum
 
-@main def secondStar() =
+def secondStar(inputLines: Seq[String]): Long =
     case class MappingA(mapsTo: Char)
     case class MappingCF(mapsTo: Set[Char])
     case class MappingC(mapsTo: Char)
@@ -94,9 +96,9 @@ def firstStar() =
         val scales = Seq(1000, 100, 10, 1)
         ints.zip(scales).map((value, scale) => value * scale).sum
 
-    val entries = Source.fromFile("./inputs/day08").getLines.map(Entry.from).toSeq
+    val entries = inputLines.map(Entry.from).toSeq
     val (mappingA, mappingCF) = deduceAandCF(entries.head)
     val (mappingC, mappingF) = deduceCandF(entries.head, mappingCF)
     val (mappingB, mappingD) = deduceBandD(entries.head, mappingCF)
     val (mappingE, mappingG) = deduceEandG(entries.head, mappingA, mappingB, mappingC, mappingD, mappingF)
-    println(entries.map(entryToInt).sum)
+    entries.map(entryToInt).sum

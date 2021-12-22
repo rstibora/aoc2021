@@ -1,3 +1,5 @@
+package aoc2021.day4
+
 import scala.io.Source
 
 
@@ -47,8 +49,8 @@ def prepareGame(inputLines: Iterator[String]): (Seq[Board], Seq[Int]) =
         if inputLines.hasNext then inputLines.next
     (boards, numbersToDraw)
 
-def firstStar() =
-    var (boards, numbersToDraw) = prepareGame(Source.fromFile("./inputs/day04").getLines)
+def firstStar(inputLines: Seq[String]): Long =
+    var (boards, numbersToDraw) = prepareGame(inputLines.iterator)
 
     def playUntilWin(boards: Seq[Board], numbersToDraw: Seq[Int]): Int =
         val drawnNumber = numbersToDraw.head
@@ -58,11 +60,11 @@ def firstStar() =
             return winningBoards.head.calculateWinningScore() * drawnNumber
         playUntilWin(playedBoards, numbersToDraw.tail)
 
-    println(playUntilWin(boards, numbersToDraw.toSeq))
+    playUntilWin(boards, numbersToDraw.toSeq)
 
 
-@main def secondStar() =
-    var (boards, numbersToDraw) = prepareGame(Source.fromFile("./inputs/day04").getLines)
+def secondStar(inputLines: Seq[String]): Long =
+    var (boards, numbersToDraw) = prepareGame(inputLines.iterator)
 
     def playUntilLastBoard(boards: Seq[Board], numbersToDraw: Seq[Int]): Int =
         val drawnNumber = numbersToDraw.head
@@ -72,4 +74,4 @@ def firstStar() =
             return playedBoards.head.calculateWinningScore() * drawnNumber
         playUntilLastBoard(remainingBoards, numbersToDraw.tail)
 
-    println(playUntilLastBoard(boards, numbersToDraw.toSeq))
+    playUntilLastBoard(boards, numbersToDraw.toSeq)

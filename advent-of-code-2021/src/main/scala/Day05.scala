@@ -1,3 +1,5 @@
+package aoc2021.day5
+
 import scala.io.Source
 import scala.collection.Map
 
@@ -25,22 +27,22 @@ extension (line: Line)
 
         (0 to length).map(step => Point(line.pointA.x + step * deltaX, line.pointA.y + step * deltaY))
 
-def firstStar() =
-    val lines = Source.fromFile("./inputs/day05").getLines.map(Line.from).toSeq
+def firstStar(inputLines: Seq[String]): Long =
+    val lines = inputLines.map(Line.from).toSeq
     var clouds: CloudDensity = Map()
 
     def processLine(lines: Seq[Line], clouds: CloudDensity): CloudDensity =
         if lines.isEmpty then return clouds
         processLine(lines.tail, clouds ++ lines.head.toPoints(skipDiagonals = true).map(point => (point, clouds.getOrElse(point, 0) + 1)))
     clouds = processLine(lines, clouds)
-    println(clouds.values.filter(density => density >= 2).size)
+    clouds.values.filter(density => density >= 2).size
 
-@main def secondStar() =
-    val lines = Source.fromFile("./inputs/day05").getLines.map(Line.from).toSeq
+def secondStar(inputLines: Seq[String]): Long =
+    val lines = inputLines.map(Line.from).toSeq
     var clouds: CloudDensity = Map()
 
     def processLine(lines: Seq[Line], clouds: CloudDensity): CloudDensity =
         if lines.isEmpty then return clouds
         processLine(lines.tail, clouds ++ lines.head.toPoints(skipDiagonals = false).map(point => (point, clouds.getOrElse(point, 0) + 1)))
     clouds = processLine(lines, clouds)
-    println(clouds.values.filter(density => density >= 2).size)
+    clouds.values.filter(density => density >= 2).size

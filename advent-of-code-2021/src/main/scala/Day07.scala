@@ -1,8 +1,10 @@
+package aoc2021.day7
+
 import scala.io.Source
 
 
-def firstStar() =
-    val positions = Source.fromFile("./inputs/day07").getLines.next.split(",").map(_.toInt)
+def firstStar(inputLines: Seq[String]): Long =
+    val positions = inputLines.head.split(",").map(_.toInt)
     val minPosition = positions.min
     val maxPosition = positions.max
 
@@ -10,10 +12,10 @@ def firstStar() =
         possiblePosition => (possiblePosition,
                              positions.map(position => (position - possiblePosition).abs).sum))
 
-    println(positionPrices.minBy((position, price) => price)._2)
+    positionPrices.minBy((position, price) => price)._2
 
-@main def secondStar() =
-    val positions = Source.fromFile("./inputs/day07").getLines.next.split(",").map(_.toInt)
+def secondStar(inputLines: Seq[String]): Long =
+    val positions = inputLines.head.split(",").map(_.toInt)
     val minPosition = positions.min
     val maxPosition = positions.max
 
@@ -23,4 +25,4 @@ def firstStar() =
                                  val n = (position - possiblePosition).abs
                                  (n * (n + 1)) / 2
                              ).sum))
-    println(positionPrices.minBy((position, price) => price)._2)
+    positionPrices.minBy((position, price) => price)._2

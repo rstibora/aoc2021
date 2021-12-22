@@ -1,5 +1,6 @@
-import scala.io.Source
+package aoc2021.day2
 
+import scala.io.Source
 
 enum Instruction:
     case Forward(amount: Int)
@@ -14,29 +15,29 @@ object Instruction:
             case s"down $x" if x.toIntOption.isDefined => Down(x.toInt)
             case _ => throw new Exception(s"$instructionLine is not a valid command.")
 
-def firstStar() =
+def firstStar(inputLines: Seq[String]): Long =
     var xPosition = 0
     var depth = 0
     for
-        instruction <- Source.fromFile("./inputs/day02").getLines.map(Instruction.from)
+        instruction <- inputLines.map(Instruction.from)
     do
         instruction match
             case Instruction.Forward(amount) => xPosition += amount
             case Instruction.Up(amount) => depth -= amount
             case Instruction.Down(amount) => depth += amount
-    println(xPosition * depth)
+    xPosition * depth
 
-@main def secondStar() =
+def secondStar(inputLines: Seq[String]): Long =
     var xPosition = 0
     var depth = 0
     var aim = 0
     for
-        instruction <- Source.fromFile("./inputs/day02").getLines.map(Instruction.from)
+        instruction <- inputLines.map(Instruction.from)
     do
         instruction match
-            case Instruction.Forward(amount) => 
+            case Instruction.Forward(amount) =>
                 xPosition += amount
                 depth += amount * aim
             case Instruction.Up(amount) => aim -= amount
             case Instruction.Down(amount) => aim += amount
-    println(xPosition * depth)
+    xPosition * depth
