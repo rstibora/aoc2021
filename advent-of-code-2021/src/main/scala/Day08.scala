@@ -1,6 +1,5 @@
 package aoc2021.day8
 
-import scala.io.Source
 import scala.collection.Set
 
 
@@ -9,7 +8,8 @@ case class Entry(patterns: Seq[String], outputs: Seq[String])
 object Entry:
     def from(entry: String): Entry =
         val splitEntry = entry.split("\\|")
-        Entry(splitEntry(0).split(" ").filter(_ != ""), splitEntry(1).split(" ").filter(_ != ""))
+        Entry(splitEntry(0).split(" ").filter(_ != "").toIndexedSeq,
+              splitEntry(1).split(" ").filter(_ != "").toIndexedSeq)
 
 def firstStar(inputLines: Seq[String]): Long =
     val entries = inputLines.map(Entry.from)
@@ -41,7 +41,7 @@ def secondStar(inputLines: Seq[String]): Long =
         val patternOfSix = patternsWithoutOneSegment.map(_.toSet)
                             .filter(pattern => (mappingCF.mapsTo & pattern).size == 1).head
         val mappingF = MappingF((mappingCF.mapsTo & patternOfSix).head)
-        val mappingC = MappingC((mappingCF.mapsTo - mappingF.mapsTo).head)
+        val mappingC = MappingC((mappingCF.mapsTo &~ Set(mappingF.mapsTo)).head)
         (mappingC, mappingF)
 
     def deduceBandD(entry: Entry, mappingCF: MappingCF): (MappingB, MappingD) =

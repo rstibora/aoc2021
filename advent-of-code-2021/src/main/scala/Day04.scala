@@ -1,7 +1,7 @@
 package aoc2021.day4
 
 import scala.io.Source
-
+import scala.collection.immutable.ArraySeq
 
 enum Field:
     case Unmarked(number: Int, x: Int, y: Int)
@@ -47,7 +47,7 @@ def prepareGame(inputLines: Iterator[String]): (Seq[Board], Seq[Int]) =
                 fields = fields :+ Field.Unmarked(rowNumbers(x), x, y)
         boards = boards :+ Board(fields)
         if inputLines.hasNext then inputLines.next
-    (boards, numbersToDraw)
+    (boards, ArraySeq.unsafeWrapArray(numbersToDraw))
 
 def firstStar(inputLines: Seq[String]): Long =
     var (boards, numbersToDraw) = prepareGame(inputLines.iterator)

@@ -13,7 +13,7 @@ def firstStar(inputLines: Seq[String]): Long =
 def secondStar(inputLines: Seq[String]): Long =
     val fishTimers = inputLines.head.split(",").map(_.toInt)
     val fishPerTimer = Map.from((0 to 8).map(timer => (timer, 0L)))
-                       ++ Map.from(fishTimers.groupBy(identity).mapValues(_.length.toLong))
+                       ++ Map.from(fishTimers.groupBy(identity).view.mapValues(_.length.toLong))
 
     def tickTimer(fishPerTimer: Map[Int, Long]): Map[Int, Long] =
         fishPerTimer.map((timer, fishAmount) => timer match
