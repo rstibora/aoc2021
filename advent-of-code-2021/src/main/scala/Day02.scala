@@ -1,7 +1,5 @@
 package aoc2021.day2
 
-import scala.io.Source
-
 enum Instruction:
     case Forward(amount: Int)
     case Up(amount: Int)

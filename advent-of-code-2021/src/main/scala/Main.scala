@@ -52,10 +52,10 @@ import scala.io.Source
                 case 1 => firstStar(inputLines)
                 case 2 => secondStar(inputLines)
         case 9 =>
-            import aoc2021.day9.{firstStar}
+            import aoc2021.day9.{firstStar, secondStar}
             star match
                 case 1 => firstStar(inputLines)
-                case 2 => firstStar(inputLines)
+                case 2 => secondStar(inputLines)
         case _ =>
             println(s"Star $star solution for day $day is not implemented.")
             return 1
